@@ -1,0 +1,477 @@
+/*~~~~~~~~~~~ GENERAL ~~~~~~~~~~~~*/
+* {
+    margin: 0;
+    padding: 0;  
+}
+header, main, aside, footer, nav{
+    display: block;
+    margin: 0px auto;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{
+    position: relative;
+    height: 100%;
+    min-height: 100vh;
+}
+.wrapper{
+    margin: 0 auto;
+    width: 100%;
+}
+.debugger{
+    background-color: purple;
+}
+
+.flexContainer{
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+}
+a{
+    text-decoration: none;
+    color: white;
+    margin-left: auto;
+}
+.smallPic{
+    height: 25px;
+    left: 25px;
+    background-color: lightgrey;
+}
+footer{
+    width: 100%;
+    height: 30px;
+    background-color: orange;
+}
+/*~~~~~~~~~~~ GENERAL HEADER ~~~~~~~~~~~~*/
+header {
+    background-color:orange;
+    height: 75px;
+}
+#hum{
+    height: 30px;
+    margin-left: 15px;    
+}
+header>h4 {
+    position: absolute;
+    margin-left: 70px;
+    color: white;
+    padding-top: 10px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+#logo{
+    background-image: url("../images/logo.png");
+    width: 120px;
+    height: 60px;
+    background-repeat: no-repeat;
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -60px;
+    margin-top: -5px;
+}
+#home{
+    width: 50px;
+    margin-right: 100px;
+    margin-left: auto;
+}
+/*~~~~~~~~~~~ General Main ~~~~~~~~~~~~*/
+main{
+    background-color: lightgrey;
+    width: 100%;
+    min-height: 696px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+main>h1{
+    padding-top: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+/*~~~~~~~~~~~ Home Page ~~~~~~~~~~~~*/
+.container{
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.container>section{
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: orange;
+    border-radius: 3px;
+    margin-bottom: 40px;
+}
+#homePage h2{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px;
+}
+/*~~~~~~~~~~~ Manage Protests ~~~~~~~~~*/
+#add_icon{
+    background-color: orange;
+    border-radius: 100%;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+#manageprotest a{
+    display: block;
+}
+/*~~~~~~~~~~~ Protest Page ~~~~~~~~~*/
+#protestPage header>a{
+    margin-top:7px;
+}
+#protestPage p{
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+button:hover{
+    background-color: gray;
+}
+#protestPage main>section{
+    width: 70%;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+
+section.details>section{
+    height: 30px;
+    width: 320px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    margin-left: 100px;
+    display: flex;
+    align-items: center;
+}
+section.details>section>img{
+    margin-right:10px;
+}
+#protestPage main>section.flexContainer>a{
+    width: 20%;
+}
+#protestPage main>section.flexContainer>a>button{
+    color: #fff;
+    background-color:orange;
+    border: 0;
+    border-radius: 3px;
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+}
+#protestPage main>section.flexContainer>a>button:hover{
+    background-color: gray;
+}
+#joinbtn{
+    background-color:green;
+    color: white;
+    border: 0;
+    border-radius: 3px;
+    margin-top: 30px;
+    width: 70%;
+    height: 50px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    margin-left: 20%;
+}
+#joinnbt{
+    background-color: red;
+}
+
+#joinbtn:hover{
+    background-color: gray;
+}
+#protestPage h2{
+    font-size: 16px;
+}
+a button{
+    background-color: red;
+}
+/*~~~~~~~~~~~ Create protest ~~~~~~~~~*/
+label{
+    margin-left: 15px;
+    margin-right: 15px;
+    display:block;
+    text-align: center;
+}
+#createProtest h2{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px;
+}
+div.form-check{
+    margin-left: 20%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+label.form-check-label{
+    width: 100px;
+}
+.form-check-label>img{
+    margin-right: 70%;
+    width: 20px;
+}
+.btn btn-primary{
+    outline-style: none;
+}
+div.buttomsFlexContainer{
+    display: flex;
+    justify-content: center;
+}
+#submitbtn{
+    width: 150px;
+    background-color: green;
+    border-width: 0;
+}
+#returnbtn{
+    width: 150px;
+    background-color: red;
+    border-width: 0;
+}
+.btn{
+    width: 150px;
+    background-color:rgb(0, 0, 0);
+    border-width: 0;
+}
+
+#updateprotest{
+    justify-content: center;
+}
+/*****************list**************/
+#chart{
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+}
+table{
+    width: 90%;
+}
+thead{
+    background-color: orange;
+}
+
+#manageProtest a{
+color: black;
+}
+#manageProtest a:hover{
+    color: green;
+}
+/*************menu**********************/
+.dropbtn {
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: absolute;
+    display: inline-block;
+    margin-left: 0px;
+
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:white;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-top: 18px;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: gray;}
+  
+  .show {display: block;}
+ /*register*/
+ #login form {
+    display: block;
+    margin-top: 20px;
+    border-bottom-style: groove;
+} 
+ #login form label{
+    display: contents;
+    text-align: center;
+    
+}
+#login button{
+    justify-content: center;
+    align-content: space-between;
+}
+#loginbtn{
+    margin-left:70px;
+    margin-bottom: 10px;
+}
+#joinbt{
+    background-color: red;
+}
+.error-message{
+    color: red;
+    margin-left: 15px;
+}
+#login a{
+    color:black;
+    letter-spacing: 1px;
+    margin-left: 50px;
+}
+#login a:hover{
+    color:goldenrod;
+}
+#login p{
+    position: relative;
+    margin-left: 50px;
+}
+
+#login form{
+    margin: inherit;
+}
+
+#register form{
+    margin: inherit;
+}
+#register form label{
+    display: contents;
+}
+#register a{
+    color: black;
+    margin-left: 30px;
+}
+#register a:hover{
+    color:orange;
+}
+/*jsoncreat*/
+
+
+/*profile*/
+#profile form{
+    margin:inherit;
+}
+#profile button {
+   padding-left: 10px;
+}
+/*police*/
+#updatepolice form{
+    text-align: inherit;
+    margin: inherit;
+}
+#updatepolice form label{
+    display: contents;
+}
+#createProtest form{
+    align-items: center;
+    margin: auto;
+}
+.share{
+    margin-left: 30px;
+}
+.share h5 {
+    width: 20px;
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+    #protestPage p{
+        font-size: 25px;
+    }
+    main>h1{
+        font-size: 40px;
+        margin-left: 20px;
+    }
+    section.details>section{
+        font-size: 22px;
+    }
+    #protestPage main>section.flexContainer>a>button{
+        font-size: 22px;
+    }
+    #joinbtn{
+        font-size: 22px;
+    }
+
+    #protestPage h2 {
+        font-size: 20px;
+    }
+  }
+  @media (max-width: 768px) {
+    header{
+        width: 100%;
+    }
+    #joinbtn{
+        width: 80%;
+        margin-left: 50px;
+    }
+    
+    .Instructions{
+        justify-items: center;
+    }
+    body{
+        width: 100%;
+    }
+  }
+  @media (max-width: 500px) {
+    body{
+        height: 100%
+    }
+    #home {
+        width: 25px;
+        margin-right: 30px;
+    }
+        header>h4{
+            font-size: 15px;
+        }
+        #hum {
+            height: 15px;
+            margin-left: 15px;
+        }
+        main>h1{
+            font-size: 20px;
+        }
+        .container>section{
+  
+            width: 150px;
+            height: 150px;
+        }
+        #homePage h2 {
+         font-size: 20px;
+        }
+        main{
+            height: 100%;
+        }
+        .container{
+            margin-top: 30px;
+        }
+        section.details>section{
+            margin-left: inherit;
+        }
+        .table {
+            width: 10%;
+            font-size: 9px;
+            position: initial;
+        }
+        .flexContainer{
+            max-width: fit-content;
+            min-width: max-content;
+        }
+  }
