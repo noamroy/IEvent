@@ -54,7 +54,7 @@ exports.eventController = {
         Log.logger.info(`EVENT CONTROLLER REQ: POST add an event`);
         const body = req.body;
         console.log(body);
-        let eventId = await NeighborhoodSystem.find()
+        let eventId = await Event.find()
             .catch(err => {
                 Log.logger.info(`EVENT CONTROLLER ERROR: getting the data from db ${err}`);
                 res.status(500).json({status: 500 , msg: `Server error`});
@@ -63,24 +63,25 @@ exports.eventController = {
             eventId = eventId[(eventId.length)-1].id+1;
         else
             eventId=1;
-        console.log(body.type);
+        console.log(`id:${eventId}`);
         console.log(body.name);
-        console.log(body.address);
-        console.log(body.ip);
-        console.log(body.mode);
-        console.log(body.mode);
+        console.log(body.location);
+        console.log(body.time);
+        console.log(body.description);
+        console.log(body.government);
+        console.log(body.status);
         if (body.type && body.name && body.address &&
             body.ip && body.mode && body.program){
-                const newNeighborhoodSystem = new NeighborhoodSystem({
-                    "type": body.type,
+                const newEvent = new Event({
+                    "id": eventId,
                     "name": body.name,
-                    "address": body.address,
-                    "ip": body.ip,
-                    "mode": body.mode,
-                    "program": body.program,
-                    "id": eventId
+                    "body": body.location,
+                    "time": body.time,
+                    "description": body.description,
+                    "government": body.government,
+                    "status": body.status
                 });
-                const result = newNeighborhoodSystem.save();
+                const result = newEvent.save();
                 if (result) {
                     Log.logger.info(`EVENT CONTROLLER RES: add event number ${eventId}`);
                     res.json(newNeighborhoodSystem);
