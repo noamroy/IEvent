@@ -12,14 +12,12 @@ app.use((req, res, next) => {
     next();
 });
 
-const { neighborhoodsystemRouter } = require("./routers/neighborhoodsystemRouter");
-app.use('/api/neighborhoodsystem', neighborhoodsystemRouter);
-const { remoteApiRouter } = require("./routers/remoteApiRouter");
-app.use('/api/remote', remoteApiRouter);
-const { programRouter } = require("./routers/programRouter");
-app.use('/api/program', programRouter);
-
-
+const { eventsRouter } = require("./routers/eventsRouter");
+app.use('/api/event', eventsRouter);
+const { usersRouter } = require("./routers/usersRouter");
+app.use('/api/user', usersRouter);
+const { connectionsRouter } = require("./routers/connectionsRouter");
+app.use('/api/connection', connectionsRouter);
 
 app.unsubscribe((req, res) => {
     res.status(400).send('Something is wrong!');

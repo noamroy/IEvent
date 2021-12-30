@@ -6,8 +6,9 @@ const Log = require('./logger');
 GET REQUEST: getAllEvents()
 GET REQUEST: getSpecificEvent(path = '/id')
 POST REQUEST: createEvent(body = all params except for id)
-PATCH REQUEST: updateEvent(path = '/id', body = all new params)
-DEvarE REQUEST: deleteEvent(path = '/id')
+PUT REQUEST: updateEvent(path = '/id', body = all new params)
+DELETE REQUEST: deleteEvent(path = '/id')
+PATCH REQUEST: updateStatus()
 */
 exports.eventController = {
     async getAllEvents(req, res) {
@@ -53,7 +54,7 @@ exports.eventController = {
     async createEvent(req, res) {
         Log.logger.info(`EVENT CONTROLLER REQ: POST add an event`);
         const body = req.body;
-        console.log(body);
+        //console.log(body);
         var eventId = await Event.find()
             .catch(err => {
                 Log.logger.info(`EVENT CONTROLLER ERROR: getting the data from db ${err}`);
@@ -63,32 +64,31 @@ exports.eventController = {
             eventId = eventId[(eventId.length)-1].id+1;
         else
             eventId=1;
-        console.log(`id:${eventId}`);
-        console.log(body.name);
-        console.log(body.location);
-        console.log(body.time);
-        console.log(body.description);
-        console.log(body.government);
-        console.log(body.status);
-        if (body.type && body.name && body.address &&
-            body.ip && body.mode && body.program){
-                const newEvent = new Event({
-                    "id": eventId,
-                    "name": body.name,
-                    "body": body.location,
-                    "time": body.time,
-                    "description": body.description,
-                    "government": body.government,
-                    "status": body.status
-                });
-                const result = newEvent.save();
-                if (result) {
-                    Log.logger.info(`EVENT CONTROLLER RES: add event number ${eventId}`);
-                    res.json(newNeighborhoodSystem);
-                } else {
-                    Log.logger.info(`EVENT CONTROLLER ERROR: getting the data from db ${err}`);
-                    res.status(500).json({status: 500 , msg: `Server error`});
-                }
+        console.log(`id: ${eventId}`);
+        console.log(`name: ${body.name}`);
+        console.log(`location: ${body.location}`);
+        console.log(`time: ${body.time}`);
+        console.log(`description: ${body.description}`);
+        console.log(`government: ${body.government}`);
+        console.log(`status: wait for approval`);
+        if (body.name && body.location && body.time){
+            const newEvent = new Event({
+                "id": eventId,
+                "name": body.name,
+                "location": body.location,
+                "time": body.time,
+                "description": body.description,
+                "government": body.government,
+                "status": "wait for approval"
+            });
+            const result = newEvent.save();
+            if (result) {
+                Log.logger.info(`EVENT CONTROLLER RES: add event number ${eventId}`);
+                res.json(newEvent);
+            } else {
+                Log.logger.info(`EVENT CONTROLLER ERROR: getting the data from db ${err}`);
+                res.status(500).json({status: 500 , msg: `Server error`});
+            }
         } else {
             Log.logger.info(`EVENT CONTROLLER RES: Input error!`);
             res.status(400).json({status: 400 , msg: `Input error!`});
@@ -157,5 +157,37 @@ exports.eventController = {
                     res.status(500).json({status: 500 , msg: `Server delete error`});
                 });
         }
+    },
+    async updateStatus(req, res){
+        Log.logger.info(`EVENT CONTROLLER REQ: Update events status`);
+        const answer = await Event.find()
+            .catch(err => {
+                Log.logger.info(`EVENT CONTROLLER ERROR: getting the data from db ${err}`);
+                res.status(500).json({status: 500 , msg: `Server error`});
+            });
+        for (let index = 0; index < answer.length; index++) {
+            const element = answer[index];
+            const eventTime = element.time;
+            const eventstatus = element.status;
+            if (eventTime+(1000*60*60*10)<new Date()){
+                Event.updateOne({ id: element.id }, {
+                    status: "passed"})
+                    .catch(err => {
+                        Log.logger.info(`EVENT CONTROLLER ERROR: update event status ${err}`);
+                        res.status(500).json({status: 500 , msg: `Error update a event status`});
+                });
+            }
+            else if (eventTime-(1000*60*60*2)<new Date()){
+                if (eventstatus == "approved")
+                Event.updateOne({ id: element.id }, {
+                    status: "now"})
+                    .catch(err => {
+                        Log.logger.info(`EVENT CONTROLLER ERROR: update event status ${err}`);
+                        res.status(500).json({status: 500 , msg: `Error update a event status`});
+                });
+            }
+        }
+        Log.logger.info(`EVENT CONTROLLER RES: update all events status`);
+        res.json({status: 200 , msg: `update all events status`});
     }
 };

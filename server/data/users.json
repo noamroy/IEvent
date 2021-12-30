@@ -1,17 +1,21 @@
 [
     {
         "id": 1,
-        "Name": "Noam",
-        "password": "Noam"
+        "name": "Noam",
+        "password": "Noam",
+        "time": "2021-12-28T12:00:00Z"
+
     },
     {
         "id": 2,
-        "Name": "Michael",
-        "password": "Michael"
+        "name": "Michael",
+        "password": "Michael",
+        "time": "2021-12-28T12:00:00Z"
     },
     {
         "id": 3,
-        "Name": "Bodek1",
-        "password": "Bodek1"
+        "name": "Bodek1",
+        "password": "Bodek1",
+        "time": "2021-12-28T12:00:00Z"
     }
 ]

@@ -1,0 +1,117 @@
+/* GENERAL CSS*/
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Alata;
+}
+a {
+    text-decoration: none;
+}
+ul,
+li {
+    list-style: none;
+}
+/*~~~~~~~~~~ DASHBOARD ~~~~~~~~~~*/
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+i:hover {
+    cursor: pointer;
+}
+.formclass {
+    width: 30%;
+    margin: 0 auto;
+}
+/* HEADER */
+header {
+    width: 100%;
+    height: 50px;
+    background-color: #FFFFFF;
+    color: #B0B0B0;
+    display: flex;
+    align-items: center;
+}
+#logo {
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 7%;
+    min-width: 120px;
+    height: 50px;
+    background-color: #1A1A1A;
+}
+#logo:hover {
+    background-color: #1A1A1A;
+}
+header span {
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+}
+/*NAVIGATION MENU*/
+.navigation {
+    background-color: #1A1A1A;
+    display: flex;
+    height: 100%;
+    width: 8%;
+    min-width: 120px;
+    flex-direction: column;
+    align-content: center;
+    color: rgb(218, 213, 213);
+    flex: 1;        /*MISHA*/
+}
+.navigation a {
+    color: rgb(218, 213, 213);
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+    padding-top: 5px;
+}
+.navigation a:hover {
+    background-color: #5e5d5b;
+}
+.current {
+    background-color: #797670;
+}
+.clickAbleP{
+    font-weight: 600;
+    color: #6b04e9;
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+.clickAbleP:hover{
+    cursor: pointer;
+    color: #797670;
+}
+/*MAIN SECTION*/
+#mainsectionflex {
+    flex: 20;    /*MISHA*/
+    display: flex;
+    flex-direction: column;
+    width: 46%;
+    min-width: 300px;
+}
+/* Map */
+section.map{
+    width: 46%;
+    height: 100%;
+}
+.responsive-map {
+    border: #797670;
+    border: 1px solid #e0dddd;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.responsive-map iframe {
+    height: 100%;
+    width: 100%;
+}
+.unimplemented {
+    pointer-events: none;
+    visibility: hidden;
+    background-color: darkgray;
+}
