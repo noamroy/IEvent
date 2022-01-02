@@ -1,6 +1,6 @@
 //DEFINES
-//const host = "https://ineighborhood.herokuapp.com";
- const host = "http://localhost:8080";
+const host = "https://ievent-shenkar.herokuapp.com";
+//const host = "http://localhost:8080";
 //GET PARAMS
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
