@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="css/style.css">
-
-  <title>Login</title>
-</head>
-
-
-<body id="loginpage">
-  <h2>Login Page</h2><br>
-  <div class="login">
-    <form id="login" method="get" action="login.php">
-      <label><b>ID number
-        </b>
-      </label>
-      <input type="text" class="inputarea" id="ID">
-      <br><br>
-      <label><b>Password
-        </b>
-      </label>
-      <input type="Password" class="inputarea" id="Pass">
-      <br><br>
-      <input type="button" name="log" id="log" value="Log In">
-    </form>
-  </div>
-</body>
-
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title></title>
+  </head>
+  <body id="loginpage">
+    <div class="wrapper">
+      <div class="logo"> <img src="./images/logo.png" alt=""> </div>
+      <div class="text-center mt-4 name"> IEvent </div>
+      <form class="p-3 mt-3" id="userForm" >
+          <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="userName" id="userName" placeholder="Username">
+          </div>
+          <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="Password">
+          </div>
+          <button class="btn mt-3" id="submitButton">Login</button>
+      </form>
+      <div class="text-center fs-6" id="notes">
+      </div>
+    </div>
+  </body>
+  <script src="scripts/index.js"></script>
 </html>

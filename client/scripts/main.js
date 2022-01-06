@@ -6,6 +6,7 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 const id = params.id;
 const crud = params.crud;
+const token = sessionStorage.getItem("jwt");
 //GLOBAL VARIABLE
 var stateOfPage = "VIEW";
 //map function
@@ -46,6 +47,12 @@ function showAllEvents() {
     $.ajax({
         url: `${host}/api/event`,
         type: "GET",
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            "Access-Control-Allow-Methods": "*",
+            "Authorization": `Bearer ${token}`
+        },
         success: (events) => {
             createEventTable(events);
         }
@@ -147,6 +154,10 @@ async function setFormForEditDelete(eventId) {
     const res_Check_If_Event_Exists = await fetch(`${host}/api/event/${eventId}`, {
         method: "GET",
         headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            "Access-Control-Allow-Methods": "*",
+            "Authorization": `Bearer ${token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
@@ -203,7 +214,15 @@ async function deleteItem(eventId) {
     var deleteButton = document.getElementById("deleteButton");
     deleteButton.addEventListener("click", async function () {
         const res = await fetch(`${host}/api/event/${eventId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                "Access-Control-Allow-Methods": "*",
+                "Authorization": `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }            
         })
         const resjson = await res.json();
         if (resjson.status == 200) {
@@ -233,11 +252,16 @@ async function submitForm(eventId) {
             status: "waiting for approval",
         }
         const stringBody = JSON.stringify(formvalue);
+        console.log(`GOT HERE`);
         const host_To_Send = (stateOfPage == "ADD") ? `${host}/api/event` : `${host}/api/event/${eventId}`;
         const method_Of_Operation = (stateOfPage == "ADD") ? "POST" : "PUT";
         const res = await fetch(host_To_Send, {
             method: method_Of_Operation,
             headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                "Access-Control-Allow-Methods": "*",
+                "Authorization": `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -245,7 +269,7 @@ async function submitForm(eventId) {
         })
         const resjson = await res.json();
         if (res.status == 200) {
-            window.location.href = "home.html";
+            window.location.href = `home.html`;
             return true;
         }
         alert(resjson.msg);
