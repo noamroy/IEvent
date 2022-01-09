@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title></title>
+</head>
+
+<body id="loginpage">
+    <div class="wrapper">
+        <div class="logo"> <img src="./images/logo.png" alt=""> </div>
+        <div class="text-center mt-4 name"> IEvent </div>
+        <form class="p-3 mt-3" id="userForm">
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="text" name="email" id="email" placeholder="email">
+            </div>
+            
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="password" name="password" id="pwd" placeholder="Password">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user"></span>
+                <input type="text" name="userName" id="userName" placeholder="Name">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="text" name="phone" id="phone" placeholder="phone">
+            </div>
+            <button class="btn mt-3" id="submitButton">Register</button>
+        </form>
+        <a href="index.html">Already have a user?</a>
+        <div class="text-center fs-6" id="notes">
+        </div>
+    </div>
+</body>
+<script src="scripts/register.js"></script>
+
+</html>

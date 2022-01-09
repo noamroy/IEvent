@@ -10,8 +10,7 @@ const crud = params.crud;
 const token = sessionStorage.getItem("jwt");
 const nameData = sessionStorage.getItem('name');
 const userType = sessionStorage.getItem('userType');
-const creatorId = sessionStorage.getItem('id');
-console.log(creatorId)
+console.log(nameData)
 //GLOBAL VARIABLE
 var stateOfPage = "VIEW";
 //map function
@@ -21,8 +20,7 @@ function setMap(location) {
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
     if (localStorage.getItem("jwt") === null) {
-        console.log("TEST")
-        // window.location.href = 'index.html';
+        window.location.href = 'index.html';
     }
     const pageName = document.getElementById('pageName');
     const navEventList = document.getElementById('navEventList');
@@ -268,7 +266,6 @@ async function submitForm(eventId) {
             government: formObj.elements["government"].value,
             numberofparticipants: formObj.elements["participants"].value,
             status: "waiting for approval",
-            creator: creatorId
         }
         const stringBody = JSON.stringify(formvalue);
         const host_To_Send = (stateOfPage == "ADD") ? `${host}/api/event` : `${host}/api/event/${eventId}`;
