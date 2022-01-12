@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com";
+const host = "https://ievent-shenkar.herokuapp.com";
 // const host = "https://ievent-server.herokuapp.com";
-const host = "http://127.0.0.1:8080";
+// const host = "http://127.0.0.1:8080";
 
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
@@ -61,13 +61,12 @@ async function prepareSubmit(){
             },
             body: stringBody
         })
-        const resjson = await res.json();
-        if (resjson.status == 200 && page == "REGISTER") {
+        if (res.status == 200) {
             alert(`user as been created back to LOGIN`);
             window.location.href = "index.html";
             return true;
         }
-        alert(resjson.msg);
+        alert('Problem');
         return false;
     });
 }

@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com";
+ const host = "https://ievent-shenkar.herokuapp.com";
 // const host = "https://ievent-server.herokuapp.com";
-const host = "http://127.0.0.1:8080";
+// const host = "http://127.0.0.1:8080";
 //GET PARAMS
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -20,9 +20,9 @@ function setMap(location) {
 }
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
-    if (localStorage.getItem("jwt") === null) {
+    if (token === null) {
         console.log("TEST")
-        // window.location.href = 'index.html';
+        window.location.href = 'index.html';
     }
     const pageName = document.getElementById('pageName');
     const navEventList = document.getElementById('navEventList');

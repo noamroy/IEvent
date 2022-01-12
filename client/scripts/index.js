@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com";
+const host = "https://ievent-shenkar.herokuapp.com";
 // const host = "https://ievent-server.herokuapp.com";
-const host = "http://127.0.0.1:8080";
+// const host = "http://127.0.0.1:8080";
 //GLOBAL VARIABLE
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
