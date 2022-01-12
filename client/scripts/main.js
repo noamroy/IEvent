@@ -262,7 +262,7 @@ async function submitForm(eventId) {
         }
         const formvalue = {
             name: nameValid,
-            location: formObj.elements["name"].value,
+            location: formObj.elements["location"].value,
             time: formObj.elements["time"].value,
             description: formObj.elements["description"].value,
             government: formObj.elements["government"].value,
