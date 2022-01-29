@@ -50,17 +50,32 @@ $(document).ready(function () {
             else{
                 stateOfPage = "DELETE/EDIT";
                 navEventList.classList.remove("current");
+                navMyEvents.classList.remove("current");
                 navAddEvent.classList.remove("current");
-                pageName.innerHTML = "Delete/edit event";
+                if (userType=="GOVERNMENT")
+                    pageName.innerHTML = "Approve/Disapprove event";
+                else
+                    pageName.innerHTML = "Delete/edit event";
                 showEventForm(id);
             }
         }
         else {
-            stateOfPage = "ADD";
-            navEventList.classList.remove("current");
-            navAddEvent.classList.add("current");
-            pageName.innerHTML = "Add event";
-            showEventForm(-1);
+            if (crud=="my"){
+                stateOfPage="MyEvents";
+                navEventList.classList.remove("current");
+                navMyEvents.classList.add("current");
+                navAddEvent.classList.remove("current");
+                pageName.innerHTML = "My events";
+                createEventTable();
+                getEventsList();
+            }
+            else{
+                stateOfPage = "ADD";
+                navEventList.classList.remove("current");
+                navAddEvent.classList.add("current");
+                pageName.innerHTML = "Add event";
+                showEventForm(-1);
+            }
         }
     }
     else {
@@ -69,11 +84,12 @@ $(document).ready(function () {
         navMyEvents.classList.remove("current");
         navAddEvent.classList.remove("current");
         pageName.innerHTML = "Events list";
-        showAllEvents();
+        createEventTable();
+        getEventsList();
     }
 });
 //~~~~~~~EVENT LIST~~~~~~~~~~~~~~~~~
-function showAllEvents() {
+function getEventsList() {  //events list selector
     $.ajax({
         url: `${host}/api/event`,
         type: "GET",
@@ -90,18 +106,22 @@ function showAllEvents() {
             }
         },
         success: (events) => {
-            createEventTable(events);
+            if (stateOfPage=="Events")
+                showApprovedEvents(events);
+            else if (stateOfPage=="MyEvents"){
+                if (userType=="USER")
+                    showMyEvents(events);
+                else
+                    showWaitingEvents(events);
+            }
         }
     });
 }
-async function getCurrentStatus(eventItem) {
-}
-async function createEventTable(events) {
+async function createEventTable() { //create empty events table
     const tableStructue =
         '<table class="table" id="eventsTable">' +
         '<thead class="thead-dark">' +
         '<tr>' +
-        //'<th scope="col">ID</th>' +
         '<th scope="col">Name</th>' +
         '<th scope="col">Location</th>' +
         '<th scope="col">Time</th>' +
@@ -114,30 +134,104 @@ async function createEventTable(events) {
         '</tbody>' +
         '</table>';
     $('#mainsectionflex').empty().append(tableStructue);
-    //$('#eventsTable').append(events);
+}
+async function showApprovedEvents(events){  //show only approved events
     events.forEach(async s => {
-        var date = new Date(s.time).toLocaleDateString();
-        var time = new Date(s.time).toLocaleTimeString();
-        var buttons;
-        if (s.creator == creatorId || userType == "GOVERNMENT")
-            buttons='<a href="home.html?crud=edit&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Edit</span></a>'
-        else
-            buttons='<a href="home.html?crud=join&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Join/Leave</span></a>'
-        $("table tbody").append(
-            '<tr>' +
-            //'<th scope="row">' + s.id + '</th>' +
-            '<td>' + s.name + '</td>' +
-            '<td><p class="clickAbleP" onclick="setMap(\'' + s.location + '\')">' + s.location + '</p></td>' +
-            '<td>' + date + ' ' + time + '</td>' +
-            '<td>' + s.numberofparticipants + '</td>' +
-            '<td>' + s.status + '</td>' +
-            '<td>' + buttons + '</td>' +
-            '</tr>'
-        );
+        if (s.status!="waiting for approval" && s.status!="denied"){
+            var date = new Date(s.time).toLocaleDateString();
+            var time = new Date(s.time).toLocaleTimeString();
+            var buttons;
+            if (s.creator == creatorId || userType == "GOVERNMENT")
+                buttons='<a href="home.html?crud=edit&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Edit</span></a>'
+            else
+                buttons='<a href="home.html?crud=join&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Join/Leave</span></a>'
+            $("table tbody").append(
+                '<tr>' +
+                //'<th scope="row">' + s.id + '</th>' +
+                '<td>' + s.name + '</td>' +
+                '<td><p class="clickAbleP" onclick="setMap(\'' + s.location + '\')">' + s.location + '</p></td>' +
+                '<td>' + date + ' ' + time + '</td>' +
+                '<td>' + s.numberofparticipants + '</td>' +
+                '<td>' + s.status + '</td>' +
+                '<td>' + buttons + '</td>' +
+                '</tr>'
+            );
+        }
     });
 }
-//~~~~~~~event form~~~~~~~~~~~~~~~~~
-async function showEventForm(eventId) {
+async function showWaitingEvents(events){   //show only waiting/denied events
+    events.forEach(async s => {
+        if (s.status=="waiting for approval"||s.status=="denied"){
+            var date = new Date(s.time).toLocaleDateString();
+            var time = new Date(s.time).toLocaleTimeString();
+            var buttons;
+            if (s.creator == creatorId || userType == "GOVERNMENT")
+                buttons='<a href="home.html?crud=edit&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Edit</span></a>'
+            else
+                buttons='<a href="home.html?crud=join&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Join/Leave</span></a>'
+            $("table tbody").append(
+                '<tr>' +
+                //'<th scope="row">' + s.id + '</th>' +
+                '<td>' + s.name + '</td>' +
+                '<td><p class="clickAbleP" onclick="setMap(\'' + s.location + '\')">' + s.location + '</p></td>' +
+                '<td>' + date + ' ' + time + '</td>' +
+                '<td>' + s.numberofparticipants + '</td>' +
+                '<td>' + s.status + '</td>' +
+                '<td>' + buttons + '</td>' +
+                '</tr>'
+            );
+        }
+    });
+}
+async function showMyEvents(events){    //show only events I created or joined
+    events.forEach(async s => {
+        const bodyvalue = {
+            eventId: s.id,
+            userId: creatorId,
+        }
+        const stringBody = JSON.stringify(bodyvalue);
+        const res = await fetch(`${host}/api/connection/find/`, {
+            method: "POST",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                "Access-Control-Allow-Methods": "*",
+                "Authorization": `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: stringBody
+        })
+        const resjson = await res.json();
+        if (res.status != 200) {
+            alert("server error")
+            window.location.href = `home.html`;
+            return false;
+        }
+        if (s.creator==creatorId || resjson.answer==1){
+            var date = new Date(s.time).toLocaleDateString();
+            var time = new Date(s.time).toLocaleTimeString();
+            var buttons;
+            if (s.creator == creatorId || userType == "GOVERNMENT")
+                buttons='<a href="home.html?crud=edit&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Edit</span></a>'
+            else
+                buttons='<a href="home.html?crud=join&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Join/Leave</span></a>'
+            $("table tbody").append(
+                '<tr>' +
+                //'<th scope="row">' + s.id + '</th>' +
+                '<td>' + s.name + '</td>' +
+                '<td><p class="clickAbleP" onclick="setMap(\'' + s.location + '\')">' + s.location + '</p></td>' +
+                '<td>' + date + ' ' + time + '</td>' +
+                '<td>' + s.numberofparticipants + '</td>' +
+                '<td>' + s.status + '</td>' +
+                '<td>' + buttons + '</td>' +
+                '</tr>'
+            );
+        }
+    });
+}
+//~~~~~~~EVENT FORM~~~~~~~~~~~~~~~~~
+async function showEventForm(eventId) { //selector between form modes
     await createEventForm();
     if (eventId == -1) {
         stateOfPage = "ADD";
@@ -150,11 +244,14 @@ async function showEventForm(eventId) {
             setFormForJoinLeave(eventId);
         }
         else {
-            setFormForEditDelete(eventId);
+            if (userType=="USER")
+                setFormForEditDelete(eventId);    
+            else
+                setFormForApprove(eventId);
         }
     }
 }
-async function createEventForm() {
+async function createEventForm() {  //create empty form
     const formStructure =
         '<form class="formclass" id="eventForm">' +
             '<div class="form-outline mb-4">' +
@@ -209,7 +306,7 @@ async function fillForm(eventId) {      //fill form with event information
     }
     else {
         if (stateOfPage=="DELETE/EDIT"){
-            if (event_Resjson.creator!=creatorId){
+            if (event_Resjson.creator!=creatorId&&userType=="USER"){
                 alert("access denied you are not the creator of this event");
                 window.location.href = 'home.html';
             }
@@ -245,32 +342,31 @@ async function fillForm(eventId) {      //fill form with event information
 }
 async function lockForm(){   //lock form information
     if (userType=="GOVERNMENT"){
-        document.getElementById("name").readonly = true;
-        document.getElementById("location").readonly = true;
-        document.getElementById("time").readonly = true;
-        document.getElementById("participants").readonly = true;
-        document.getElementById("description").readonly = true;
-        document.getElementById("government").readonly = false;
+        document.getElementById("name").readOnly = true;
+        document.getElementById("location").readOnly = true;
+        document.getElementById("time").readOnly = true;
+        document.getElementById("participants").readOnly = true;
+        document.getElementById("description").readOnly = true;
+        document.getElementById("government").readOnly = false;
     }
     else if (stateOfPage=="JOIN/LEAVE"){
-        document.getElementById("name").readonly = true;
-        document.getElementById("location").readonly = true;
-        document.getElementById("time").readonly = true;
-        document.getElementById("participants").readonly = true;
-        document.getElementById("description").readonly = true;
-        document.getElementById("government").readonly = true;
+        document.getElementById("name").readOnly = true;
+        document.getElementById("location").readOnly = true;
+        document.getElementById("time").readOnly = true;
+        document.getElementById("participants").readOnly = true;
+        document.getElementById("description").readOnly = true;
+        document.getElementById("government").readOnly = true;
     }
     else{
-        document.getElementById("name").readonly = false;
-        document.getElementById("location").readonly = false;
-        document.getElementById("time").readonly = false;
-        document.getElementById("participants").readonly = false;
-        document.getElementById("description").readonly = false;
-        document.getElementById("government").readonly = true;
+        document.getElementById("name").readOnly = false;
+        document.getElementById("location").readOnly = false;
+        document.getElementById("time").readOnly = false;
+        document.getElementById("participants").readOnly = false;
+        document.getElementById("description").readOnly = false;
+        document.getElementById("government").readOnly = true;
     }
 }
-// event add buttons
-async function setFormForAdd() {
+async function setFormForAdd() {    //creator first time form
     document.getElementById("buttonPlace").innerHTML = '';
     var submitButton = document.createElement('button');
     submitButton.type = "submit";
@@ -280,8 +376,7 @@ async function setFormForAdd() {
     document.getElementById("buttonPlace").append(submitButton);
     submitForm();
 }
-// event join/leave buttons
-async function setFormForJoinLeave(eventId) {
+async function setFormForJoinLeave(eventId) {   //set bottons for participant
     const bodyvalue = {
         eventId: eventId,
         userId: creatorId,
@@ -331,8 +426,6 @@ async function setFormForJoinLeave(eventId) {
             },
             body: stringBody
         });
-        console.log (`status is: ${res.status}`);
-        alert("hello");
         if (res.status == 200) {
             if (method_Of_Operation=="DELETE"){
                 alert ("leave event");
@@ -350,8 +443,7 @@ async function setFormForJoinLeave(eventId) {
     });
     return;
 }
-// event edit/delete buttons
-async function setFormForEditDelete(eventId) {
+async function setFormForEditDelete(eventId) {  //set up bottons for creator
     var submitButton = document.createElement('button');
     submitButton.type = "submit";
     submitButton.className = "btn btn-primary btn-block mb-4";
@@ -367,30 +459,7 @@ async function setFormForEditDelete(eventId) {
     submitForm(eventId);
     deleteItem(eventId);
 }
-//if press on delete event
-async function deleteItem(eventId) {
-    var deleteButton = document.getElementById("deleteButton");
-    deleteButton.addEventListener("click", async function () {
-        const res = await fetch(`${host}/api/event/${eventId}`, {
-            method: "DELETE",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-                "Access-Control-Allow-Methods": "*",
-                "Authorization": `Bearer ${token}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        const resjson = await res.json();
-        if (resjson.status == 200) {
-            window.location.href = "home.html";
-        }
-        window.location.href = "home.html";
-    });
-}
-//if press on add/update event
-async function submitForm(eventId) {
+async function submitForm(eventId) {    //if press on add/update event
     const formObj = document.getElementById("eventForm");
     formObj.addEventListener("submit", async function (event) {
         // stop form submission
@@ -434,6 +503,112 @@ async function submitForm(eventId) {
         alert(resjson.msg);
         return false;
     });
+}
+async function deleteItem(eventId) {    //if press on delete event
+    var deleteButton = document.getElementById("deleteButton");
+    deleteButton.addEventListener("click", async function () {
+        const res = await fetch(`${host}/api/event/${eventId}`, {
+            method: "DELETE",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                "Access-Control-Allow-Methods": "*",
+                "Authorization": `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        const resjson = await res.json();
+        if (resjson.status == 200) {
+            window.location.href = "home.html";
+        }
+        window.location.href = "home.html";
+    });
+}
+async function setFormForApprove(eventId) {     //set up the bottons for government user
+    const res = await fetch(`${host}/api/event/${eventId}`, {
+        method: "GET",
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            "Access-Control-Allow-Methods": "*",
+            "Authorization": `Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    const resjson = await res.json();
+    if (res.status != 200) {
+        alera ("server error");
+        window.location.href = "home.html";
+        return;
+    }
+    var denyButton = document.createElement('button');
+    denyButton.className = "btn btn-primary btn-block mb-4";
+    denyButton.id = "denyButton";
+    denyButton.innerHTML = "Deny";
+    denyButton.addEventListener("click", async function () {
+        const formObj = document.getElementById("eventForm");
+        const bodyvalue = {
+            status: "denied",
+            government: formObj.elements["government"].value,
+        }
+        const stringBody = JSON.stringify(bodyvalue);
+        const res = await fetch(`${host}/api/event/${eventId}`, {
+            method: "PUT",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                "Access-Control-Allow-Methods": "*",
+                "Authorization": `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: stringBody
+        });
+        if (res.status == 200) {
+            alert ("event denied");
+            window.location.href = "home.html/crud=my";
+            return;
+        }
+        alert ("server error");
+        window.location.href = "home.html";
+    });
+    document.getElementById("buttonPlace").append(denyButton);
+    if (resjson.status == "waiting for approval" || resjson.status == "denied"){
+        var approvedButton = document.createElement('button');
+        approvedButton.className = "btn btn-primary btn-block mb-4";
+        approvedButton.id = "approvedButton";
+        approvedButton.innerHTML = "Approve";
+        approvedButton.addEventListener("click", async function () {
+            const formObj = document.getElementById("eventForm");
+            const bodyvalue = {
+                status: "approved",
+                government: formObj.elements["government"].value,
+            }
+            const stringBody = JSON.stringify(bodyvalue);
+            const res = await fetch(`${host}/api/event/${eventId}`, {
+                method: "PUT",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                    "Access-Control-Allow-Methods": "*",
+                    "Authorization": `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: stringBody
+            });
+            if (res.status == 200) {
+                alert ("event approved");
+                window.location.href = "home.html/crud=my";
+                return;
+            }
+            alert ("server error");
+            window.location.href = "home.html";
+        });
+        document.getElementById("buttonPlace").append(approvedButton);
+    }
 }
 
 
