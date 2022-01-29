@@ -96,6 +96,18 @@ header span {
     width: 46%;
     min-width: 300px;
 }
+form {
+    flex: flex;
+    justify-content: center;
+}
+.form-outline{
+    margin-left: 0px;
+    min-width: 240px;
+}
+input{
+    display: block;
+    min-width: 240px;
+}
 /* Map */
 section.map{
     width: 46%;

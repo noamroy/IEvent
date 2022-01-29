@@ -1,7 +1,7 @@
 //DEFINES
-const host = "https://ievent-shenkar.herokuapp.com";
-// const host = "https://ievent-server.herokuapp.com";
-// const host = "http://127.0.0.1:8080";
+// const host = "https://ievent-shenkar.herokuapp.com"; //Noam
+// const host = "https://ievent-server.herokuapp.com"; //MISHA
+const host = "http://127.0.0.1:8080"; //LOCAL
 
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
@@ -45,11 +45,15 @@ async function prepareSubmit(){
             alert("Phone has to be 10 numbers");
             return false;
         }
+        var typeValid="USER";
+        if (formObj.elements["type"].checked == true)
+            typeValid="GOVERNMENT";
         const formvalue = {
             email: emailValid,
             name: nameValid,
             password: passValid,
-            phone:phoneValid
+            phone:phoneValid,
+            type:typeValid
         }
         const stringBody = JSON.stringify(formvalue);
         const host_To_Send = `${host}/api/user/register`;
@@ -66,7 +70,8 @@ async function prepareSubmit(){
             window.location.href = "index.html";
             return true;
         }
-        alert('Problem');
+        const resjson = await res.json();
+        alert(resjson.msg);
         return false;
     });
 }
