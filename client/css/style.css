@@ -89,6 +89,18 @@ header span {
     color: #797670;
 }
 /*MAIN SECTION*/
+.searchBox{
+    display: flex;
+    font-size: 16px; /* Increase font-size */
+}
+#search {
+    margin-left: 5%;
+    width: 70%;
+
+}
+#searchPress {
+    width: 20%;
+}
 #mainsectionflex {
     flex: 20;    /*MISHA*/
     display: flex;

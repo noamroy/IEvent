@@ -59,6 +59,7 @@ async function prepareSubmit() {
             sessionStorage.setItem("userType", resjson.type);
             sessionStorage.setItem("id", resjson.id);
             sessionStorage.setItem("mapLocation", "shenkar%20college");
+            sessionStorage.setItem("search", '');
             window.location.href = `home.html`;
             return true;
         }

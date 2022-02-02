@@ -11,7 +11,8 @@ const token = sessionStorage.getItem("jwt");
 const nameData = sessionStorage.getItem('name');
 const userType = sessionStorage.getItem('userType');
 const creatorId = sessionStorage.getItem('id');
-console.log(`session storage: nameData-${nameData}, userType-${userType}, creatorId-${creatorId}`);
+const searchText = sessionStorage.getItem("search");
+console.log(`session storage: nameData-${nameData}, userType-${userType}, creatorId-${creatorId}, search-${searchText}`);
 //GLOBAL VARIABLE
 var stateOfPage = "Events";
 //map function
@@ -119,6 +120,10 @@ function getEventsList() {  //events list selector
 }
 async function createEventTable() { //create empty events table
     const tableStructue =
+        '<div class="searchBox">'+
+        '<input type="text" id="search" placeholder="Search for events..">' +
+        '<button id="searchPress">search</button>'+
+        '</div>'+
         '<table class="table" id="eventsTable">' +
         '<thead class="thead-dark">' +
         '<tr>' +
@@ -134,14 +139,24 @@ async function createEventTable() { //create empty events table
         '</tbody>' +
         '</table>';
     $('#mainsectionflex').empty().append(tableStructue);
+    searchEvent();
+}
+async function searchEvent() {
+    searchButton=document.getElementById("searchPress");
+    searchButton.addEventListener("click", async function () {
+        text=document.getElementById("search").value;
+        console.log(`search pressed, text is ${text}`);
+        sessionStorage.setItem("search", text);
+        location.reload();
+    });
 }
 async function showApprovedEvents(events){  //show only approved events
     events.forEach(async s => {
-        if (s.status!="waiting for approval" && s.status!="denied"){
+        if (s.status!="waiting for approval" && s.status!="denied"&& s.name.includes(searchText)){
             var date = new Date(s.time).toLocaleDateString();
             var time = new Date(s.time).toLocaleTimeString();
             var buttons;
-            if (s.creator == creatorId || userType == "GOVERNMENT")
+            if ((s.creator == creatorId || userType == "GOVERNMENT"))
                 buttons='<a href="home.html?crud=edit&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Edit</span></a>'
             else
                 buttons='<a href="home.html?crud=join&id=' + s.id + '"><span  class="btn btn-info editbtnclass" id="editbtnid-' + s.id + '" h>Join/Leave</span></a>'
@@ -161,7 +176,7 @@ async function showApprovedEvents(events){  //show only approved events
 }
 async function showWaitingEvents(events){   //show only waiting/denied events
     events.forEach(async s => {
-        if (s.status=="waiting for approval"||s.status=="denied"){
+        if ((s.status=="waiting for approval"||s.status=="denied")&& s.name.includes(searchText)){
             var date = new Date(s.time).toLocaleDateString();
             var time = new Date(s.time).toLocaleTimeString();
             var buttons;
@@ -208,7 +223,7 @@ async function showMyEvents(events){    //show only events I created or joined
             window.location.href = `home.html`;
             return false;
         }
-        if (s.creator==creatorId || resjson.answer==1){
+        if ((s.creator==creatorId || resjson.answer==1)&& s.name.includes(searchText)){
             var date = new Date(s.time).toLocaleDateString();
             var time = new Date(s.time).toLocaleTimeString();
             var buttons;
