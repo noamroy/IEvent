@@ -122,7 +122,7 @@ async function createEventTable() { //create empty events table
     const tableStructue =
         '<div class="searchBox">'+
         '<input type="text" id="search" placeholder="Search for events..">' +
-        '<button id="searchPress">search</button>'+
+        '<button class="btn btn-info"  id="searchPress">search</button>'+
         '</div>'+
         '<table class="table" id="eventsTable">' +
         '<thead class="thead-dark">' +
