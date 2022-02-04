@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com"; //Noam
+const host = "https://ievent-shenkar.herokuapp.com"; //Noam
 // const host = "https://ievent-server.herokuapp.com"; //MISHA
-const host = "http://127.0.0.1:8080"; //LOCAL
+// const host = "http://127.0.0.1:8080"; //LOCAL
 //GET PARAMS
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -12,7 +12,7 @@ const nameData = sessionStorage.getItem('name');
 const userType = sessionStorage.getItem('userType');
 const creatorId = sessionStorage.getItem('id');
 const searchText = sessionStorage.getItem("search");
-console.log(`session storage: nameData-${nameData}, userType-${userType}, creatorId-${creatorId}, search-${searchText}`);
+//console.log(`session storage: nameData-${nameData}, userType-${userType}, creatorId-${creatorId}, search-${searchText}`);
 //GLOBAL VARIABLE
 var stateOfPage = "Events";
 //map function
@@ -23,7 +23,7 @@ function setMap(location) {
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
     if (token === null) {
-        console.log("try to enter without token")
+        //console.log("try to enter without token")
         window.location.href = 'index.html';
     }
     setMap(sessionStorage.getItem("mapLocation"));
@@ -37,9 +37,9 @@ $(document).ready(function () {
         navMyEvents.innerHTML = "Waiting Events";
     }    
     if (crud) {
-        console.log(`crud is: ${crud}`);
+        //console.log(`crud is: ${crud}`);
         if (id) {
-            console.log(`id is: ${id}`);
+            //console.log(`id is: ${id}`);
             if (crud=="join"){
                 stateOfPage = "JOIN/LEAVE";
                 navEventList.classList.remove("current");
@@ -141,11 +141,11 @@ async function createEventTable() { //create empty events table
     $('#mainsectionflex').empty().append(tableStructue);
     searchEvent();
 }
-async function searchEvent() {
+async function searchEvent() {  //update the search string
     searchButton=document.getElementById("searchPress");
     searchButton.addEventListener("click", async function () {
         text=document.getElementById("search").value;
-        console.log(`search pressed, text is ${text}`);
+        //console.log(`search pressed, text is ${text}`);
         sessionStorage.setItem("search", text);
         location.reload();
     });

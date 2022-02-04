@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com"; //Noam
+const host = "https://ievent-shenkar.herokuapp.com"; //Noam
 // const host = "https://ievent-server.herokuapp.com"; //MISHA
-const host = "http://127.0.0.1:8080"; //LOCAL
+// const host = "http://127.0.0.1:8080"; //LOCAL
 //GLOBAL VARIABLE
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -53,7 +53,7 @@ async function prepareSubmit() {
         })
         const resjson = await res.json();
         if (resjson.status == 200) {
-            console.log(resjson.name);
+            //console.log(resjson.name);
             sessionStorage.setItem("jwt", resjson.token);
             sessionStorage.setItem("name", resjson.name);
             sessionStorage.setItem("userType", resjson.type);

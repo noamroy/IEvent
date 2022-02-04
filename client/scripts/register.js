@@ -1,7 +1,7 @@
 //DEFINES
-// const host = "https://ievent-shenkar.herokuapp.com"; //Noam
+ const host = "https://ievent-shenkar.herokuapp.com"; //Noam
 // const host = "https://ievent-server.herokuapp.com"; //MISHA
-const host = "http://127.0.0.1:8080"; //LOCAL
+// const host = "http://127.0.0.1:8080"; //LOCAL
 
 //PAGE LOADER SELECTOR
 $(document).ready(function () {
